@@ -7,6 +7,7 @@ struct Student {
     char name[50];
     long long int id;
     float marks;
+    int section;
 };
 
 struct Student studentList[MAX_STUDENTS];
@@ -26,7 +27,10 @@ void addStudent() {
     printf("  Enter the student's ID number: ");
     scanf("%lld", &newStudent.id);
 
-    printf("  Enter the student's marks: ");
+    printf("  Enter the student's Section: ");
+    scanf("%d",&newStudent.section);
+
+    printf("  Enter the student's CGPA: ");
     scanf("%f", &newStudent.marks);
 
     studentList[numStudents++] = newStudent;
@@ -41,16 +45,44 @@ void displayStudents() {
     }
 
     printf("  Student List:\n");
-    printf("  ===============================================\n");
-    printf("  Name\t\tID Number\t\tMarks\n");
-    printf("  -----------------------------------------------\n");
+    printf("  ==================================================\n");
+    printf("  Name\t\tID Number\tSection\t\tCGPA\n");
+    printf("  ---------------------------------------------------\n");
 
     for (int i = 0; i < numStudents; i++) {
-        printf("  %s\t\t%lld\t\t%.2f\n",studentList[i].name,studentList[i].id,  studentList[i].marks);
+        printf("  %s\t\t%lld\t\t%d\t\t%.2f\n",studentList[i].name,studentList[i].id,studentList[i].section, studentList[i].marks);
     }
 
     //printf("==================================\n");
 }
+
+void searchBySection(){
+    int sec;
+    printf("  Enter section:");
+    scanf("%d:",&sec);
+
+    for (int i = 0; i < numStudents; i++) {
+        if(sec==studentList[i].section)
+        {
+            printf("  Student name: %s ID %lld CGPA %.2lf \n",studentList[i].name,studentList[i].id,studentList[i].marks);
+        }
+ }
+        
+    }
+void searchByID(){
+        long long int sid;
+    printf("  Enter ID:");
+    scanf("%lld:",&sid);
+    for (int i = 0; i < numStudents; i++)
+    {
+        if (sid==studentList[i].id)
+        {
+            printf("  Student name: %s Section %d CGPA %.2lf \n",studentList[i].name,studentList[i].section,studentList[i].marks);
+        }
+    }
+}
+
+
 void deleteStudent() {
     long long int idToDelete;
     int found = 0;
@@ -92,11 +124,13 @@ int main() {
     printf("  =========================\n");
 
     do {
-        printf("\n  Menu:\n");
+        printf("\n  Option:\n");
         printf("  1. Add Student\n");
         printf("  2. Display Students\n");
-        printf("  3. Delete Student\n");
-        printf("  4. Exit\n");
+        printf("  3. Search Student by Section\n");
+        printf("  4. Search Student by ID\n");
+        printf("  5. Delete Student\n");
+        printf("  6. Exit\n");
         printf("  Enter your choice: ");
         scanf("%d", &choice);
 
@@ -108,14 +142,20 @@ int main() {
                 displayStudents();
                 break;
             case 3:
+            searchBySection();
+             break;
+               case 4:
+                searchByID();
+             break;
+            case 5:
             deleteStudent();
             break;
-            case 4:
+            case 6:
                 printf("  Exiting...\n");
                 break;
             default:
                 printf("  Invalid choice! Please try again.\n");
         }
-    } while (choice != 4);
+    } while (choice != 6);
     return 0;
 }
