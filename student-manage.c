@@ -6,7 +6,8 @@
 struct Student {
     char name[50];
     long long int id;
-    float marks;
+    float marks[5];
+    float cgpa;
     int section;
 };
 
@@ -30,8 +31,18 @@ void addStudent() {
     printf("  Enter the student's Section: ");
     scanf("%d",&newStudent.section);
 
-    printf("  Enter the student's CGPA: ");
-    scanf("%f", &newStudent.marks);
+printf("  Enter marks for 5 subjects:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("  Subject %d: ", i + 1);
+        scanf("%f", &newStudent.marks[i]);
+    }
+
+    // Calculate CGPA as an average of marks for 5 subjects
+    newStudent.cgpa = 0;
+    for (int i = 0; i < 5; i++) {
+        newStudent.cgpa += newStudent.marks[i];
+    }
+    newStudent.cgpa /= 5.0;
 
     studentList[numStudents++] = newStudent;
 
@@ -50,21 +61,26 @@ void displayStudents() {
     printf("  ---------------------------------------------------\n");
 
     for (int i = 0; i < numStudents; i++) {
-        printf("  %s\t\t%lld\t\t%d\t\t%.2f\n",studentList[i].name,studentList[i].id,studentList[i].section, studentList[i].marks);
+        printf("  %s\t\t%lld\t\t%d\t\t%.2f\n", studentList[i].name, studentList[i].id, studentList[i].section, studentList[i].cgpa);
     }
+}
 
     //printf("==================================\n");
-}
+
 
 void searchBySection(){
     int sec;
     printf("  Enter section:");
     scanf("%d:",&sec);
+    printf("  Student List:\n");
+    printf("  ==================================================\n");
+    printf("  ID \t\tName \t\tCGPA\n");
+    printf("  ---------------------------------------------------\n");
 
     for (int i = 0; i < numStudents; i++) {
         if(sec==studentList[i].section)
         {
-            printf("  Student name: %s ID %lld CGPA %.2lf \n",studentList[i].name,studentList[i].id,studentList[i].marks);
+            printf("  %lld\t\t%s\t\t%.2lf \n",studentList[i].id,studentList[i].name,studentList[i].cgpa);
         }
  }
         
@@ -73,11 +89,15 @@ void searchByID(){
         long long int sid;
     printf("  Enter ID:");
     scanf("%lld:",&sid);
+    printf("  Student List:\n");
+    printf("  ==================================================\n");
+    printf("  ID \t\tName \t\tSection\t\tCGPA\n");
+    printf("  ---------------------------------------------------\n");
     for (int i = 0; i < numStudents; i++)
     {
         if (sid==studentList[i].id)
         {
-            printf("  Student name: %s Section %d CGPA %.2lf \n",studentList[i].name,studentList[i].section,studentList[i].marks);
+            printf("   %lld\t\t%s\t\t%d\t\t%.2lf\n",studentList[i].id,studentList[i].name,studentList[i].section, studentList[i].cgpa);
         }
     }
 }
