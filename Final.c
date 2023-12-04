@@ -24,7 +24,6 @@ void addStudent()
         printf("  Error: Maximum number of students reached!\n");
         return;
     }
-
     struct Student newStudent;
 
     printf("  Enter the student's name: ");
